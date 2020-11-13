@@ -1,14 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Redmine Scheduler Jobs</h1>
+<h1>Redmine Job Scheduler</h1> 
 
-<table>
+<table class="list">
   <thead>
     <tr>
-      <th>Descrição</th>
-      <th>Tipo</th>
-      <th>Expressão de tempo</th>
-      <th>Código a ser Executado</th>
+      <th>Job</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,13 +13,8 @@
   <tbody>
     <% @redmine_scheduler_jobs.each do |redmine_scheduler_job| %>
       <tr>
-        <td><%= redmine_scheduler_job.description %></td>
-        <td><%= redmine_scheduler_job.kind %></td>
-        <td><%= redmine_scheduler_job.time_expression %></td>
-        <td><%= redmine_scheduler_job.code_to_execute %></td>
-        <td><%= link_to 'Exibir', redmine_scheduler_job %></td>
-        <td><%= link_to 'Editar', edit_redmine_scheduler_job_path(redmine_scheduler_job) %></td>
-        <td><%= link_to 'Excluir', redmine_scheduler_job, method: :delete, data: { confirm: 'Tem certeza que deseja excluir o job #{redmine_scheduler_job.description}?' } %></td>
+        <td><%= link_to redmine_scheduler_job.description, edit_redmine_scheduler_job_path(redmine_scheduler_job) %></td>
+        <td><%= link_to 'Excluir', redmine_scheduler_job, method: :delete, data: { confirm: 'Tem certeza que deseja excluir o job #{redmine_scheduler_job.description}?'}, class: 'icon icon-del' %></td>
       </tr>
     <% end %>
   </tbody>
