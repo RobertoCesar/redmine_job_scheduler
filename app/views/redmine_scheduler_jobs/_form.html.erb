@@ -1,0 +1,38 @@
+<%= form_with(model: redmine_scheduler_job, local: true) do |form| %>
+  <% if redmine_scheduler_job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(redmine_scheduler_job.errors.count, "error") %> Erros de validação:</h2>
+
+      <ul>
+        <% redmine_scheduler_job.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Tipo" %>
+    <%= form.select :kind, @jobTipos %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Expressão de tempo" %>
+    <%= form.text_field :time_expression %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Código a ser executado" %>
+    <%= form.text_area :code_to_execute %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

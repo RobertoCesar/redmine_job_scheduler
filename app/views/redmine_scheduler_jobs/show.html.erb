@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Descrição</strong>
+  <%= @redmine_scheduler_job.description %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @redmine_scheduler_job.kind %>
+</p>
+
+<p>
+  <strong>Expressão de Tempo:</strong>
+  <%= @redmine_scheduler_job.time_expression %>
+</p>
+
+<p>
+  <strong>Codigo a ser executado:</strong>
+  <%= @redmine_scheduler_job.code_to_execute %>
+</p>
+
+<%= link_to 'Editar', edit_redmine_scheduler_job_path(@redmine_scheduler_job) %> |
+<%= link_to 'Voltar', redmine_scheduler_jobs_path %>

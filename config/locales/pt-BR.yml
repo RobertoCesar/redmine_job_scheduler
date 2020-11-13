@@ -1,0 +1,7 @@
+# Strings em Português para internacionalização (i18n) do Rails
+pt-BR:
+  description: "Descrição"
+  kind: "Tipo"
+  time_expression: "Expressão temporal"
+  code_to_execute: "Código a executar"
+
