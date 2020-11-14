@@ -14,6 +14,13 @@
     <% @redmine_scheduler_jobs.each do |redmine_scheduler_job| %>
       <tr>
         <td><%= link_to redmine_scheduler_job.description, edit_redmine_scheduler_job_path(redmine_scheduler_job) %></td>
+        <td>
+          <%= if redmine_scheduler_job.active
+                "ativo"
+              else
+                "inativo"
+              end %>
+        </td>
         <td><%= link_to 'Excluir', redmine_scheduler_job, method: :delete, data: { confirm: 'Tem certeza que deseja excluir o job #{redmine_scheduler_job.description}?'}, class: 'icon icon-del' %></td>
       </tr>
     <% end %>

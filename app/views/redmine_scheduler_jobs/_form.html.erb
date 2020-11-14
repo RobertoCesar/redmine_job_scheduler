@@ -11,28 +11,33 @@
     </div>
   <% end %>
 
-  <div class="field">
 
-    <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
+  <fieldset class="box tabular">
+    <p>
+      <%= form.label :description %>
+      <%= form.text_field :description, :required => true, :size => "150" %>
+    </p>
 
-  <div class="field">
-    <%= form.label "Tipo" %>
-    <%= form.select :kind, @jobTipos %>
-  </div>
+    <p>
+      <%= form.label "Tipo" %>
+      <%= form.select :kind, @jobTipos %>
+    </p>
 
-  <div class="field">
-    <%= form.label "Expressão de tempo" %>
-    <%= form.text_field :time_expression %>
-  </div>
+    <p>
+      <%= form.label "Expressão de tempo" %>
+      <%= form.text_field :time_expression, :required => true %>
+    </p>
 
-  <div class="field">
-    <%= form.label "Código a ser executado" %>
-    <%= form.text_area :code_to_execute, cols: "80", rows: "20" %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <p>
+      <%= form.label "Código a ser executado" %>
+      <%= form.text_area :code_to_execute, cols: "50", rows: "20", :required => true %>
+    </p>
+    <p>
+      <%= form.label "Ativo" %> 
+      <%= form.check_box :active %> 
+    </p>
+    <p>
+      <%= form.submit value: "#{form.object.new_record? ? 'Criar novo job' : 'Atualizar Job'}", class: "button" %>
+    </p>
+  </fieldset>
 <% end %>
