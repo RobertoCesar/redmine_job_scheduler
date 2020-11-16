@@ -41,3 +41,35 @@
     </p>
   </fieldset>
 <% end %>
+
+<hr/>
+<h2> Informações importantes para criar um Job </h2>
+
+<p> <strong>Descrição: </strong> descrição breve sobre o que o job faz. </p>
+
+<p> <strong>Tipo: </strong> determina o tipo de agendamento em função do campo 'Expressão de tempo': 
+  <ul>
+    <li>in e at executam uma vez de acordo com o valor em 'Expressão de tempo'. Exemplos de expressão de tempo válidas para os tipos in e at: <code>3s</code><code>5m</code><code> 2h</code></li>
+    <li>every, interval e cron executam repetidas vezes</li>
+    <li>cron exige no campo 'Expressão de tempo' um valor com a sintaxe do crontab. Exemplo:
+    <code>* * * * *</code> (será executado a cada minuto)</li>
+  </ul>
+</p>
+<p>Para mais informações sobre a sintaxe utilizada, visite o link no final desta página </p>
+<p> <strong> Expressão de tempo: </strong> Exemplos: '5s' (cinco segundos), '10m' (dez minutos), expressões cron, etc. Visite o link no final desta página para saber mais sobre a sintaxe utilizada de acordo com o tipo de job.</p>
+<p> <strong>Código a ser executado: </strong> escreva o código (ruby) que será executado no job. <strong>CUIDADO:</strong> erros de sintaxe poderão ocasionar o travamento do Redmine. </p> 
+<p> <strong> Ativo: </strong> determina se o job está ativo ou não. Caso não esteja ativo, ele não será executado.</p>
+
+
+<p> Todos os jobs ativos são executados nos seguintes momentos:
+	<ul>
+	<li> Quando o Redmine é iniciado; </li>
+	<li> Quando o job é criado com o campo 'Ativo' habilitado; </li>
+	<li> Quando o job é atualizado. </li>
+	</ul>
+
+</p>
+<hr/>
+<footer>Este plugin utiliza a sintaxe da biblioteca Rufus Scheduler. Saiba mais sobre essa sintaxe no link: <a href="https://github.com/jmettraux/rufus-scheduler">https://github.com/jmettraux/rufus-scheduler</a></footer>
+
+

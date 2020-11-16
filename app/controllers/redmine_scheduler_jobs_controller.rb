@@ -65,6 +65,7 @@ class RedmineSchedulerJobsController < ApplicationController
   # DELETE /redmine_scheduler_jobs/1
   # DELETE /redmine_scheduler_jobs/1.json
   def destroy
+    RedmineSchedulerJobsController::paraJob(@redmine_scheduler_job)
     @redmine_scheduler_job.destroy
     respond_to do |format|
       format.html { redirect_to redmine_scheduler_jobs_url, notice: 'Job excluído com sucesso.' }
@@ -89,28 +90,32 @@ class RedmineSchedulerJobsController < ApplicationController
   end
   
   def self.executaJob(job)
-    if(job.active)
+    begin
+      if(job.active)
       #Instancia o rufusScheduler
-      s = Rufus::Scheduler.singleton
-      Rails.logger.info "Job #{job.id} - #{job.description}"
-      Rails.logger.info "Metodo #{job.kind}"
-      Rails.logger.info "Tempo #{job.time_expression}"
-      Rails.logger.info "Função: #{job.code_to_execute}"
-      
-      if s.respond_to? job.kind
-        rJob = s.send job.kind, job.time_expression, :job => true do
-          instance_eval job.code_to_execute
+        s = Rufus::Scheduler.singleton
+        Rails.logger.info "Job #{job.id} - #{job.description}"
+        Rails.logger.info "Metodo #{job.kind}"
+        Rails.logger.info "Tempo #{job.time_expression}"
+        Rails.logger.info "Função: #{job.code_to_execute}"
+        
+        if s.respond_to? job.kind
+          rJob = s.send job.kind, job.time_expression, :job => true do
+            instance_eval job.code_to_execute
+          end
+          Rails.logger.info "Id do job no RufusScheduler: #{rJob.id}"
+          unless job.current_execution_id == nil
+            job.last_execution_id = job.current_execution_id
+          end
+          job.current_execution_id = rJob.id
+          job.save
+          return rJob
+        else
+          Rails.logger.error "Erro ao executar job #{job.description}: é possível que algum campo do job esteja malformado."
         end
-        Rails.logger.info "Id do job no RufusScheduler: #{rJob.id}"
-        unless job.current_execution_id == nil
-          job.last_execution_id = job.current_execution_id
-        end
-        job.current_execution_id = rJob.id
-        job.save
-        return rJob
-      else
-        Rails.logger.error "Erro ao executar job #{job.description}: é possível que algum campo do job esteja malformado."
       end
+    rescue ArgumentError
+      Rails.logger.error "Erro ao executar job #{job.description}: é possível que algum campo do job esteja malformado."
     end
   end
 
@@ -126,6 +131,13 @@ class RedmineSchedulerJobsController < ApplicationController
       end
     else
       Rails.logger.error "Erro ao parar job #{job.description}: o job não está ativo ou não está em execução."
+    end
+  end
+
+  def self.executaTodosOsJobs
+    jobs = RedmineSchedulerJob.all
+    jobs.each do |j|
+      RedmineSchedulerJobsController::executaJob(j)
     end
   end
 

@@ -13,7 +13,7 @@ Redmine::Plugin.register :redmine_scheduler do
   #settings default: {'empty' =>  true}, partial: 'settings/redmine_scheduler'
   menu :admin_menu, :scheduler, { controller: 'redmine_scheduler_jobs', action: 'index' }, caption: 'Redmine Scheduler'
 
-  job = RedmineSchedulerJob.all.first
-  RedmineSchedulerJobsController::executaJob(job)
+  #exetuta todos os jobs
+  RedmineSchedulerJobsController::executaTodosOsJobs
 end
 

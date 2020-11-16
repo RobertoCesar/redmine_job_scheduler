@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Job</th>
+      <th>Ativo?</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,14 +15,14 @@
     <% @redmine_scheduler_jobs.each do |redmine_scheduler_job| %>
       <tr>
         <td><%= link_to redmine_scheduler_job.description, edit_redmine_scheduler_job_path(redmine_scheduler_job) %></td>
-        <td>
-          <%= if redmine_scheduler_job.active
-                "ativo"
-              else
-                "inativo"
-              end %>
+        <td style='font-weight:bold'>
+        <% if redmine_scheduler_job.active %>
+           <font color="green" >ativo</font>
+         <% else %>
+           <font color="red">inativo</font>
+         <% end %>
         </td>
-        <td><%= link_to 'Excluir', redmine_scheduler_job, method: :delete, data: { confirm: 'Tem certeza que deseja excluir o job #{redmine_scheduler_job.description}?'}, class: 'icon icon-del' %></td>
+        <td><%= link_to 'Excluir', redmine_scheduler_job, method: :delete, data: { confirm: 'Tem certeza que deseja excluir o job '+redmine_scheduler_job.description+'?'}, class: 'icon icon-del' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +30,4 @@
 
 <br>
 
-<%= link_to 'Novo Job', new_redmine_scheduler_job_path %>
+<%= link_to 'Inserir novo Job', new_redmine_scheduler_job_path, class:'icon icon-add' %>

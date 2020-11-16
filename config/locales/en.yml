@@ -1,3 +1,6 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  description: "Description"
+  kind: "Kind"
+  time_expression: "Time Expression"
+  code_to_execute: "Código a executar"
