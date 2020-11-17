@@ -90,9 +90,22 @@ class RedmineSchedulerJobsController < ApplicationController
   end
   
   def self.executaJob(job)
+    #só executa jobs se a variável REDMINE_MANAGER=true
+    if defined? ENV['REDMINE_MANAGER']
+      if ENV['REDMINE_MANAGER'] === true
+        Rails.logger.info "Variavel REDMINE_MANAGER = true"
+      else
+        Rails.logger.info "Variavel REDMINE_MANAGER = false"
+      end
+    else
+      Rails.logger.info "Variável REDMINE_MANAGER não está setada."
+    end
+    
+    
     begin
       if(job.active)
       #Instancia o rufusScheduler
+        return if defined?(Rails::Console) || Rails.env.test? || File.split($0).last == 'rake'
         s = Rufus::Scheduler.singleton
         Rails.logger.info "Job #{job.id} - #{job.description}"
         Rails.logger.info "Metodo #{job.kind}"
@@ -120,7 +133,7 @@ class RedmineSchedulerJobsController < ApplicationController
   end
 
   def self.paraJob(job)
-    if(job.active and job.current_execution_id != nil )
+    if(job.current_execution_id != nil )
       s = Rufus::Scheduler.singleton
       if s.scheduled?(job.current_execution_id)
         s.unschedule(job.current_execution_id)
