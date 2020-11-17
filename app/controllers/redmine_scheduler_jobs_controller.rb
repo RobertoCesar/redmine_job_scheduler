@@ -1,6 +1,6 @@
 class RedmineSchedulerJobsController < ApplicationController
   before_action :set_redmine_scheduler_job, only: [:show, :edit, :update, :destroy]
-#  before_action :autoriza_admin
+  before_action :autoriza_admin
   before_action :define_tipos_de_job
   
   def define_tipos_de_job
@@ -107,10 +107,10 @@ class RedmineSchedulerJobsController < ApplicationController
       #Instancia o rufusScheduler
         return if defined?(Rails::Console) || Rails.env.test? || File.split($0).last == 'rake'
         s = Rufus::Scheduler.singleton
-        Rails.logger.info "Job #{job.id} - #{job.description}"
-        Rails.logger.info "Metodo #{job.kind}"
-        Rails.logger.info "Tempo #{job.time_expression}"
-        Rails.logger.info "Função: #{job.code_to_execute}"
+        #Rails.logger.info "Job #{job.id} - #{job.description}"
+        #Rails.logger.info "Metodo #{job.kind}"
+        #Rails.logger.info "Tempo #{job.time_expression}"
+        #Rails.logger.info "Função: #{job.code_to_execute}"
         
         if s.respond_to? job.kind
           rJob = s.send job.kind, job.time_expression, :job => true do
